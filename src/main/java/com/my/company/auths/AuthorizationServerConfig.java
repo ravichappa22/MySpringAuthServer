@@ -26,11 +26,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override	
 	public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
 			clients.inMemory()
-		        .withClient("client") 
-		        .secret("clientpassword")
+		        .withClient("usemyname") 
+		        .secret("mypassword")
 		        .scopes("read", "write") 
-		        .authorities("ROLE_READER")  
-		        .authorizedGrantTypes("password", "client_credentials")
+		        .authorities("ROLE_USER")  
+		        .authorizedGrantTypes("client_credentials")
 		        .accessTokenValiditySeconds(10);
 	 }
 	
