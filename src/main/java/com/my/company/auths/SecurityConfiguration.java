@@ -15,12 +15,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		
 	}
 
-	/*@Override
+	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		super.configure(http);
-		http.authorizeRequests().antMatchers("oauth/token","/oauth/check_token","oauth/token_key")
-						.permitAll();
-	}*/
+		http.authorizeRequests().antMatchers("/login","oauth/token","/oauth/check_token","oauth/token_key", "oauth/validate")
+						.permitAll().anyRequest().hasRole("USER");
+	}
 	
 	
 

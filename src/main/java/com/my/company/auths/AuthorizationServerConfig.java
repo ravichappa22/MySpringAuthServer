@@ -30,18 +30,28 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
 		endpoints.tokenStore(tokenStore())
 			.tokenEnhancer(jwtTokenEnhancer())
-				.authenticationManager(authenticationManager);
+				.authenticationManager(authenticationManager).pathMapping("oauth/check_token", "oauth/validate");
     }
 	
 	@Override	
 	public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
 			clients.inMemory()
-		        .withClient("usemyname") 
+		        .withClient("usemyname")
 		        .secret("mypassword")
 		        .scopes("read", "write") 
-		        .authorities("ROLE_RS_READ")  
-		        .authorizedGrantTypes("client_credentials")
-		        .accessTokenValiditySeconds(600);
+		        .authorities("ROLE_READ","ROLE_USER")
+		        .authorizedGrantTypes("client_credentials", "refresh_token", "password")
+		        .accessTokenValiditySeconds(30)
+			
+			.and()
+	        .withClient("adminuser")
+	        .secret("adminpassword")
+	        .scopes("read", "write") 
+	        .authorities("ROLE_READ","ROLE_USER", "ROLE_ADMIN", "reader")
+	        .authorizedGrantTypes("client_credentials")
+	        .accessTokenValiditySeconds(600);
+			
+			
 	 }
 	
 	
